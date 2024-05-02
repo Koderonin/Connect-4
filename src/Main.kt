@@ -1,14 +1,41 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-fun main() {
-    val name = "Kotlin"
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    println("Hello, " + name + "!")
+import org.fusesource.jansi.AnsiConsole
 
-    for (i in 1..5) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        println("i = $i")
+fun main() {
+    System.setProperty("jansi.passthrough", "true")
+    AnsiConsole.systemInstall()
+
+    var option = 1
+    println("Bienvenido al juego de 4 en raya!")
+    while (option != 0) {
+        option = menu()
+        when (option) {
+            1 -> {
+                val partida = Partida()
+                partida.iniciarPartida()
+            }
+            2 -> {
+                Partida.verEstadisticas()
+            }
+            0 -> println("Hasta pronto!")
+        }
     }
+}
+
+fun menu() : Int {
+    println("¿Qué desea hacer?\n" +
+            "1. Jugar\n" +
+            "2. Ver estadísticas\n" +
+            "0. Salir")
+
+    try {
+        when(readln().toInt()) {
+            1 -> return 1
+            2 -> return 2
+            0 -> return 0
+            else -> println("Opción no valida. Por favor, introduzca una de las opciones dadas")
+        }
+    } catch (e: NumberFormatException) {
+        println("El input no ha sido numérico. Por favor, introduzca una de las opciones dadas")
+    }
+    return menu()
 }
